@@ -1,24 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout, Menu, Row, Col } from 'antd';
+
+import HomePage from './HomePage';
+
+import './App.scss';
+
+const { Header, Content, Footer } = Layout;
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout className="layout">
+        <Header>
+          <div className="logo" />
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+          <Menu.Item key={1}>About</Menu.Item>
+          <Menu.Item key={2}>Sign Up</Menu.Item>
+          </Menu>
+        </Header>
+        <Content className='content-app'>
+          <Row>
+            <Col span={8}><HomePage /></Col>
+            <Col span={8}><HomePage /></Col>
+            <Col span={8}><HomePage /></Col>
+          </Row>
+          <Row>
+            <Col span={12}><HomePage /></Col>
+            <Col span={12}><HomePage /></Col>
+          </Row>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>©{new Date().getFullYear()} Made with Love By Fantastic Wears Inc.</Footer>
+      </Layout>
     </div>
   );
 }

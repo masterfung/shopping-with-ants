@@ -1,35 +1,23 @@
 import React from 'react';
-import { Layout, Menu, Row, Col } from 'antd';
+import { Layout, Space } from 'antd';
+import { HeartTwoTone } from '@ant-design/icons';
 
-import HomePage from './HomePage';
+import HomePage from './pages/HomePage/HomePage';
+import NavBar from './components/NavBar/NavBar';
 
 import './App.scss';
 
-const { Header, Content, Footer } = Layout;
+const { Footer } = Layout;
 
 function App() {
   return (
     <div className="App">
       <Layout className="layout">
-        <Header>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-          <Menu.Item key={1}>About</Menu.Item>
-          <Menu.Item key={2}>Sign Up</Menu.Item>
-          </Menu>
-        </Header>
-        <Content className='content-app'>
-          <Row>
-            <Col span={8}><HomePage /></Col>
-            <Col span={8}><HomePage /></Col>
-            <Col span={8}><HomePage /></Col>
-          </Row>
-          <Row>
-            <Col span={12}><HomePage /></Col>
-            <Col span={12}><HomePage /></Col>
-          </Row>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>©{new Date().getFullYear()} Made with Love By Fantastic Wears Inc.</Footer>
+        <NavBar />
+        <HomePage />
+        <Footer className="footer">
+          ©{new Date().getFullYear()} Made with <Space><HeartTwoTone twoToneColor="#eb2f96" /></Space> by Fantastic Wears Inc.
+        </Footer>
       </Layout>
     </div>
   );

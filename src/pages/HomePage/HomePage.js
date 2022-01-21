@@ -1,4 +1,4 @@
-import { Layout, Row, Col, } from 'antd';
+import { Layout } from 'antd';
 import Directory from '../../components/Directory/Directory';
 
 import "./HomePage.scss";

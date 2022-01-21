@@ -1,14 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
+import HomePage from './pages/HomePage/HomePage';
+
+import './index.scss';
+
+const HatsPage = () => {
+  return (
+    <h1>HI Hats</h1>
+  )
+}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <React.StrictMode>
+    <Routes>
+      <Route path='/' element={<App />}>
+        <Route index element={<HomePage />} />
+        <Route path='/shop/hats' element={<HatsPage />} />
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        />
+      </Route>
+      
+    </Routes>
+    
+  </React.StrictMode>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

@@ -1,3 +1,3 @@
-#Shopping with Ants
+# Shopping with Ants
 
-This is a project to create a shopping experience leveraging the latests from React ecosystem. 
+This is a project to create a shopping experience leveraging the latests from React ecosystem.

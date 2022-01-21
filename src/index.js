@@ -6,14 +6,9 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
 import HomePage from './pages/HomePage/HomePage';
+import Shop from './components/Shop/Shop';
 
 import './index.scss';
-
-const HatsPage = () => {
-  return (
-    <h1>HI Hats</h1>
-  )
-}
 
 ReactDOM.render(
   <BrowserRouter>
@@ -21,7 +16,8 @@ ReactDOM.render(
     <Routes>
       <Route path='/' element={<App />}>
         <Route index element={<HomePage />} />
-        <Route path='/shop/hats' element={<HatsPage />} />
+        <Route path='shop' element={<Shop />} />
+        
         <Route
           path="*"
           element={

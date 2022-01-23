@@ -4,12 +4,34 @@ html, body {
   font-family: 'PT Sans Narrow', sans-serif;
 }
 
-.App {
-  background-color: grey;
-}
-
-.content {
-  padding: 0 60px;
+.ant-layout-header {
   background-color: white;
 }
 
+.ant-menu {
+  width: 400px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 9999;
+}
+
+.App {
+  background-color: grey;
+
+  > .content {
+    padding: 10px 60px;
+    background-color: white;
+    min-height: 85vh;
+  }
+}
+
+
+
+.footer {
+  position: sticky;
+  bottom: 0;
+}

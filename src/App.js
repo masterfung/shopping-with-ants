@@ -12,7 +12,7 @@ const { Footer, Content } = Layout;
 function App() {
   return (
     <div className="App">
-      <Layout className="layout">
+      <Layout className="header">
         <NavBar />
       </Layout>
       <Layout>

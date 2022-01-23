@@ -8,7 +8,7 @@ const CollectionItem = ({imageUrl, name, price}) => {
   return (
     <Col className="collection-item gutter-row" span={6}>
       <Row>
-        <Col span={20} offset={4}>
+        <Col span={20} offset={4} className="collection-container">
           <div className="image">
             <img src={imageUrl}></img>
           </div>

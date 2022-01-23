@@ -10,7 +10,7 @@ const CollectionPreview = ({title, items}) => {
   return (
     <div className="collection-preview">
       <Title className="title">{title}</Title>
-      <Row className="preview" gutter={16}>
+      <Row className="preview">
         {items
           .filter((item, idx) => idx < 4)
           .map(({id, name, imageUrl, price}) => {

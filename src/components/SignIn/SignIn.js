@@ -1,5 +1,6 @@
 import { Form, Input, Button, Checkbox, Col, Row, Typography } from 'antd';
 import { Link } from 'react-router-dom';
+import { signInWithGoogle } from '../../firebase/firebase.utils';
 
 import "./SignIn.scss";
 
@@ -66,6 +67,12 @@ const SignInForm = () => {
             </Button>
             {"  "}
             Or <Link to="/signUp">register now</Link>
+          </Form.Item>
+          
+          <Form.Item>
+          <Button type="primary" className="login-form-button" onClick={signInWithGoogle}>
+              Sign In With Google
+            </Button>
           </Form.Item>
         </Form>
       </Col>

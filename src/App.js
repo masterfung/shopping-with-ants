@@ -1,19 +1,32 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Layout, Space } from 'antd';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { HeartTwoTone } from '@ant-design/icons';
 
 import NavBar from './components/NavBar/NavBar';
-
+import { auth } from './firebase/firebase.utils';
 import './App.scss';
 
 const { Footer, Content } = Layout;
 
-function App() {
+const App = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  let unsubscribeFromAuth = null;
+
+  useEffect(() => {
+    unsubscribeFromAuth = auth.onAuthStateChanged(( user => {
+      setCurrentUser(user);
+      console.log("THIS IS USER", user);
+    }));
+    return () => {
+      return unsubscribeFromAuth();
+    }
+  }, []);
+
   return (
     <div className="App">
       <Layout className="header">
-        <NavBar />
+        <NavBar currentUser={currentUser} />
       </Layout>
       <Layout>
         <Content className="content">

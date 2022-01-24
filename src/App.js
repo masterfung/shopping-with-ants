@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Layout, Space } from 'antd';
-import { Outlet } from 'react-router-dom';
-import { HeartTwoTone } from '@ant-design/icons';
+import { useState, useEffect } from "react";
+import { Layout, Space } from "antd";
+import { Outlet } from "react-router-dom";
+import { HeartTwoTone } from "@ant-design/icons";
 
-import NavBar from './components/NavBar/NavBar';
-import { auth } from './firebase/firebase.utils';
-import './App.scss';
+import NavBar from "./components/NavBar/NavBar";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import "./App.scss";
 
 const { Footer, Content } = Layout;
 
@@ -14,10 +14,11 @@ const App = () => {
   let unsubscribeFromAuth = null;
 
   useEffect(() => {
-    unsubscribeFromAuth = auth.onAuthStateChanged(( user => {
+    unsubscribeFromAuth = auth.onAuthStateChanged( async user => {
+      createUserProfileDocument(user);
       setCurrentUser(user);
       console.log("THIS IS USER", user);
-    }));
+    });
     return () => {
       return unsubscribeFromAuth();
     }

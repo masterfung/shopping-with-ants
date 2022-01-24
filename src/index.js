@@ -1,32 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
-import HomePage from './pages/HomePage/HomePage';
-import Shop from './components/Shop/Shop';
-import SignInForm from './components/SignIn/SignIn';
-import SignUpForm from './components/SignUp/SignUp';
+import HomePage from "./pages/HomePage/HomePage";
+import Shop from "./components/Shop/Shop";
+import SignInForm from "./components/SignIn/SignIn";
+import SignUpForm from "./components/SignUp/SignUp";
 
-import './index.scss';
+import "./index.scss";
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
     <Routes>
-      <Route path='/' element={<App />}>
+      <Route path="/" element={<App />}>
         <Route index element={<HomePage />} />
-        <Route path='shop' element={<Shop />} />
-        <Route path='signIn' element={<SignInForm />} />
-        <Route path='signUp' element={<SignUpForm />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="signIn" element={<SignInForm />} />
+        <Route path="signUp" element={<SignUpForm />} />
         
         <Route
           path="*"
           element={
             <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
+              <p>There"s nothing here!</p>
             </main>
           }
         />
@@ -36,7 +36,7 @@ ReactDOM.render(
     
   </React.StrictMode>
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

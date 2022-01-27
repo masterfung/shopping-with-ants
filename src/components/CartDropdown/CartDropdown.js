@@ -1,41 +1,33 @@
-import { Menu, Dropdown } from "antd";
-import { DownOutlined } from '@ant-design/icons';
+import { Menu, Dropdown, Button } from "antd";
 import { useSelector } from "react-redux";
-import CartIcon from "../Cart-Icon/CartIcon";
+import CartIcon from "../CartIcon/CartIcon";
+import CartItem from "../CartItem/CartItem";
 
 import "./CartDropdown.scss";
 
-const menu = (
-  <Menu className="cart-dropdown">
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item icon={<DownOutlined />}>
-      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-        2nd menu item (disabled)
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-        3rd menu item (disabled)
-      </a>
-    </Menu.Item>
-    <Menu.Item danger>a danger item</Menu.Item>
-  </Menu>
-);
-
 const Cart = () => {
-  const hidden = useSelector(state => state.cart.hidden)
+  const { hidden, cartItems} = useSelector(state => state.cart);
+
   return (
-    hidden 
+    cartItems.length === 0
     ? <CartIcon />
-    : <Dropdown overlay={menu}>
-      <span onClick={e => e.preventDefault()}>
-        <CartIcon />
-      </span>
-    </Dropdown>
+    : (
+      <Dropdown trigger={['click']} overlay={
+        <Menu className="cart-dropdown" >
+          {
+            cartItems.map(cartItem => <CartItem key={cartItem.id} item={cartItem} />)
+          }
+          <Menu.Item className="checkout-section">
+            <Button className="checkout-btn">Go to Checkout</Button>
+          </Menu.Item>
+        </Menu>
+      }>
+        <span onClick={e => e.preventDefault()}>
+          <CartIcon />
+        </span>
+        
+      </Dropdown>
+      )
   )
 };
 

@@ -5,9 +5,13 @@ import {
   Row,
   Col,
   Button,
-  Typography
-} from 'antd';
-import { Link } from 'react-router-dom';
+  Typography,
+  notification
+} from "antd";
+import { useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { createUserProfileDocument } from "../../firebase/firebase.utils";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import "./SignUp.scss";
 
@@ -30,13 +34,56 @@ const tailFormItemLayout = {
 
 const SignUpForm = () => {
   const [form] = Form.useForm();
-
+  const currentUser = useSelector((state) => state.user.currentUser);
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    const { email, password, confirm, gender, displayName } = values;
+    if (password !== confirm) {
+      notification["error"](
+        {
+          message: "Password does not match confirmation",
+          description:
+            "Please correct issue before proceeding.",
+          duration: 5,
+        }
+      );
+      return;
+    }
+
+    try {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log('successful on creation of user with function', userCredential);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('Sign up error has occurred', error);
+          // ..
+        });
+      createUserProfileDocument({email, displayName}, {gender});
+      notification["success"](
+        {
+          message: "Sign Up Was Successful",
+          description:
+            "Please log in with your account information.",
+          duration: 5,
+        }
+      );
+      form.resetFields();
+    } catch (err) {
+      console.log("An error has occurred with sign up", err);
+    }
+    
   };
 
   return (
-    <Row className="sign-up-container">
+    currentUser?.id 
+    ? <Navigate to="/"></Navigate>
+    : <Row className="sign-up-container">
       <Col span={6} offset={8}>
       <Title className="title">Sign Up</Title>
         <Form
@@ -50,12 +97,12 @@ const SignUpForm = () => {
             label="E-mail"
             rules={[
               {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
+                type: "email",
+                message: "The input is not valid E-mail!",
               },
               {
                 required: true,
-                message: 'Please input your E-mail!',
+                message: "Please input your E-mail!",
               },
             ]}
           >
@@ -68,8 +115,12 @@ const SignUpForm = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
+                message: "Please input your password!",
               },
+              {
+                len: 7,
+                message: "Passwords need to be at least 7 characters"
+              }
             ]}
             hasFeedback
           >
@@ -79,20 +130,20 @@ const SignUpForm = () => {
           <Form.Item
             name="confirm"
             label="Confirm Password"
-            dependencies={['password']}
+            dependencies={["password"]}
             hasFeedback
             rules={[
               {
                 required: true,
-                message: 'Please confirm your password!',
+                message: "Please confirm your password!",
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
 
-                  return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                  return Promise.reject(new Error("The two passwords that you entered do not match!"));
                 },
               }),
             ]}
@@ -101,13 +152,13 @@ const SignUpForm = () => {
           </Form.Item>
 
           <Form.Item
-            name="nickname"
-            label="Nickname"
+            name="displayName"
+            label="Display Name"
             tooltip="What do you want others to call you?"
             rules={[
               {
                 required: true,
-                message: 'Please input your nickname!',
+                message: "Please input your nickname!",
                 whitespace: true,
               },
             ]}
@@ -121,7 +172,7 @@ const SignUpForm = () => {
             rules={[
               {
                 required: true,
-                message: 'Please select gender!',
+                message: "Please select gender!",
               },
             ]}
           >
@@ -137,7 +188,7 @@ const SignUpForm = () => {
               Register
             </Button>
             {"  "}
-              or <Link to='/signIn'>Sign In</Link>
+              or <Link to="/signIn">Sign In</Link>
           </Form.Item>
         </Form>
       </Col>

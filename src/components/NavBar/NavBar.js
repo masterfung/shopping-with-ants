@@ -1,13 +1,18 @@
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase.utils";
+import { useSelector, useDispatch } from "react-redux";
 import { ReactComponent as Logo } from '../../assets/icons/crown.svg';
+import { setCurrentUser } from "../../redux/user/userSlice";
+import CartDropdown from "../CartDropdown/CartDropdown";
 
 import "./NavBar.scss";
 
 const { Header } = Layout;
 
-const NavBar = ({currentUser}) => {
+const NavBar = () => {
+  const currentUser = useSelector(state => state.user.currentUser);
+  const dispatch = useDispatch();
   return (
     <Header className="header">
       <div className="logo">
@@ -20,12 +25,18 @@ const NavBar = ({currentUser}) => {
         <Menu.Item key={2}>CONTACT</Menu.Item>
         <Menu.Item key={3}>
         { 
-          ( currentUser?.emailVerified && currentUser?.email )
-          ? <Link to="/" onClick={() => auth.signOut()}>SIGN OUT</Link>
+          ( currentUser?.email )
+          ? <Link to="/" onClick={() => {
+            auth.signOut();
+            dispatch(setCurrentUser(null))
+          }}>SIGN OUT</Link>
           : <Link to="/signIn">SIGN IN</Link>
          }
         </Menu.Item>
-        <Menu.Item key={4}>CART</Menu.Item>
+        <Menu.Item key={4}>
+          <CartDropdown />
+          
+        </Menu.Item>
       </Menu>
     </Header>
   );

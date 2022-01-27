@@ -1,41 +1,50 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
 
 import HomePage from "./pages/HomePage/HomePage";
 import Shop from "./components/Shop/Shop";
 import SignInForm from "./components/SignIn/SignIn";
 import SignUpForm from "./components/SignUp/SignUp";
+import store from "./redux/store";
 
 import "./index.scss";
-
+import { auth } from "./firebase/firebase.utils";
 ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route index element={<HomePage />} />
-        <Route path="shop" element={<Shop />} />
-        <Route path="signIn" element={<SignInForm />} />
-        <Route path="signUp" element={<SignUpForm />} />
-        
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There"s nothing here!</p>
-            </main>
-          }
-        />
-      </Route>
+  <Provider store={store}>
+    <BrowserRouter>
+      <React.StrictMode>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<HomePage />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="signIn" element={<SignInForm />} />
+            <Route path="signUp" element={<SignUpForm />} />
+            <Route path="signOut" element={() => {
+              auth.signOut();
+              
+              return (<Navigate to="/" />);
+            }} />
+            
+            <Route
+              path="*"
+              element={
+                <main style={{ padding: "1rem" }}>
+                  <p>There"s nothing here!</p>
+                </main>
+              }
+            />
+          </Route>
+          
+        </Routes>
       
-    </Routes>
-    
-  </React.StrictMode>
-  </BrowserRouter>,
+      </React.StrictMode>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );
 

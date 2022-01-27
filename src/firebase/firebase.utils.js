@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, addDoc, getDoc, doc, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, addDoc, collection, query, where, getDocs } from "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyB04FZbQkhzHR3vYE-MkWNWBJk5PayThtY",
@@ -29,6 +29,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, " => ", doc.data());
     const data = doc.data();
+    docRef = data;
+    docRef.id = userAuth.uid;
     if (data.email === userAuth.email) {
       found = true;
     }
@@ -47,7 +49,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
       console.error("Error adding document: ", err);
     }
   } else {
-    console.log("Entity already exist!");
+    // in the future, we can call update here. 
+    console.log("Entity already exist!", docRef);
   }
 
   return docRef;

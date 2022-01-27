@@ -1,23 +1,34 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Layout, Space } from "antd";
 import { Outlet } from "react-router-dom";
 import { HeartTwoTone } from "@ant-design/icons";
 
 import NavBar from "./components/NavBar/NavBar";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentUser } from "./redux/user/userSlice";
 import "./App.scss";
 
 const { Footer, Content } = Layout;
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
   let unsubscribeFromAuth = null;
 
   useEffect(() => {
-    unsubscribeFromAuth = auth.onAuthStateChanged( async user => {
-      createUserProfileDocument(user);
-      setCurrentUser(user);
-      console.log("THIS IS USER", user);
+    unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+      if (userAuth) {
+        const {id, email, displayName } = await createUserProfileDocument(userAuth);
+        dispatch(setCurrentUser({
+          id,
+          email,
+          displayName,
+        }));
+      } else {
+        dispatch(setCurrentUser(userAuth));
+      }
+      
     });
     return () => {
       return unsubscribeFromAuth();
@@ -27,7 +38,7 @@ const App = () => {
   return (
     <div className="App">
       <Layout className="header">
-        <NavBar currentUser={currentUser} />
+        <NavBar />
       </Layout>
       <Layout>
         <Content className="content">

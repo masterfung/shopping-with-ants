@@ -1,18 +1,36 @@
-import { Form, Input, Button, Checkbox, Col, Row, Typography } from 'antd';
-import { Link } from 'react-router-dom';
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { Form, Input, Button, Checkbox, Col, Row, Typography } from "antd";
+import { Link, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 
 import "./SignIn.scss";
 
 const { Title } = Typography;
 
 const SignInForm = () => {
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const onFinish = ({email, password}) => {
+    // console.log("Received values of form: ", values);
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log("USER is signed in", user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("error on log in", error);
+      });
   };
 
   return (
-    <Row className="sign-in-container">
+    currentUser?.id 
+    ? <Navigate to="/"></Navigate> 
+    : <Row className="sign-in-container">
       <Col span={6} offset={8}>
         <Title className="title">Sign In</Title>
         <Form
@@ -26,12 +44,12 @@ const SignInForm = () => {
           label="E-mail"
           rules={[
             {
-              type: 'email',
-              message: 'The input is not valid E-mail!',
+              type: "email",
+              message: "The input is not valid E-mail!",
             },
             {
               required: true,
-              message: 'Please input your E-mail!',
+              message: "Please input your E-mail!",
             },
           ]}
         >
@@ -44,7 +62,7 @@ const SignInForm = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your password!',
+              message: "Please input your password!",
             },
           ]}
           hasFeedback

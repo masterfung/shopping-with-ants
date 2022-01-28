@@ -188,7 +188,7 @@ const SignUpForm = () => {
               Register
             </Button>
             {"  "}
-              or <Link to="/signIn">Sign In</Link>
+              or <Link to="/signin">Sign In</Link>
           </Form.Item>
         </Form>
       </Col>

@@ -12,7 +12,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     toggleCartHidden: (state) => {
-      state.hidden = state.cartItems.length > 0
+      state.hidden = !state.hidden
     },
     addCartItem: (state, action) => {
       state.cartItems = addItemToCart(state.cartItems, action.payload)

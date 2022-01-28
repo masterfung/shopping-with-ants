@@ -5,15 +5,16 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-
 import HomePage from "./pages/HomePage/HomePage";
 import Shop from "./components/Shop/Shop";
 import SignInForm from "./components/SignIn/SignIn";
 import SignUpForm from "./components/SignUp/SignUp";
 import store from "./redux/store";
+import { auth } from "./firebase/firebase.utils";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 import "./index.scss";
-import { auth } from "./firebase/firebase.utils";
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
@@ -22,13 +23,14 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route index element={<HomePage />} />
             <Route path="shop" element={<Shop />} />
-            <Route path="signIn" element={<SignInForm />} />
-            <Route path="signUp" element={<SignUpForm />} />
-            <Route path="signOut" element={() => {
+            <Route path="signin" element={<SignInForm />} />
+            <Route path="signup" element={<SignUpForm />} />
+            <Route path="signout" element={() => {
               auth.signOut();
               
               return (<Navigate to="/" />);
             }} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             
             <Route
               path="*"

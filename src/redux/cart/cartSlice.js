@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addItemToCart } from "./cart.utils";
+import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
+import { addItemToCart, decrementItemQuantityFromCart, incrementItemQuantityFromCart } from "./cart.utils";
 
 const initialState = {
   cartItems: [],
@@ -17,12 +18,28 @@ export const cartSlice = createSlice({
     addCartItem: (state, action) => {
       state.cartItems = addItemToCart(state.cartItems, action.payload)
     },
+    removeCartItem: (state, action) => {
+      state.cartItems = state.cartItems.filter(cartItem => cartItem.id !== action.payload.id)
+    },
+    decrementCartItemQuantity: (state, action) => {
+      state.cartItems = decrementItemQuantityFromCart(state.cartItems, action.payload)
+    },
+    incrementCartItemQuantity: (state, action) => {
+      state.cartItems = incrementItemQuantityFromCart(state.cartItems, action.payload)
+    },
     getTotalCartCount: (state) => {
       state.count = state.cartItems.length
     }
   }
 });
 
-export const { addCartItem, toggleCartHidden, getTotalCartCount } = cartSlice.actions;
+export const { 
+  addCartItem, 
+  toggleCartHidden, 
+  getTotalCartCount, 
+  removeCartItem , 
+  decrementCartItemQuantity,
+  incrementCartItemQuantity
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

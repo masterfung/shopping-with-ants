@@ -18,11 +18,20 @@
     }
   }
   .name,
-  .quantity {
-    width: 23%;
+  .quantity,
+  .price {
+    width: 27.5%;
   }
 
-  .price, .remove-button {
+  .minus-btn {
+    margin-right: 5px;
+  }
+
+  .plus-btn {
+    margin-left: 5px;
+  }
+
+   .remove-button {
     width: 15%;
   }
 

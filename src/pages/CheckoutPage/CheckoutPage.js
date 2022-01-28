@@ -5,18 +5,17 @@ import CheckoutItem from "../../components/CheckoutItem/CheckoutItem";
 
 import "./CheckoutPage.scss";
 
-
 const CheckoutPage = () => {
   const state = useSelector(state=> state);
   const cartItems = selectCartItems(state);
   const cartTotal = selectCartTotal(state);
   return (
     <Row className="checkout-page">
-      <Col span={20} offset={2} className="checkout-header ">
-        <div className="header-block">
+      <Col className="checkout-header ">
+        <div className="header-block text-center">
           <span>Product</span>
         </div>
-        <div className="header-block">
+        <div className="header-block text-center">
           <span>Description</span>
         </div>
         <div className="header-block text-center">

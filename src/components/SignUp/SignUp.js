@@ -54,13 +54,10 @@ const SignUpForm = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in 
-          const user = userCredential.user;
           console.log('successful on creation of user with function', userCredential);
           // ...
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
           console.log('Sign up error has occurred', error);
           // ..
         });

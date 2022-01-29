@@ -4,5 +4,9 @@
   .preview {
     text-align: center;
     margin: 0 auto;
+    row-gap: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: space-between;
   }
 }

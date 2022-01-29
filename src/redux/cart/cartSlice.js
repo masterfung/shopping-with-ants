@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
 import { addItemToCart, decrementItemQuantityFromCart, incrementItemQuantityFromCart } from "./cart.utils";
 
 const initialState = {

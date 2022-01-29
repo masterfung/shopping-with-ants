@@ -6,7 +6,7 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import HomePage from "./pages/HomePage/HomePage";
-import Shop from "./components/Shop/Shop";
+import Shop from "./pages/Shop/Shop";
 import SignInForm from "./components/SignIn/SignIn";
 import SignUpForm from "./components/SignUp/SignUp";
 import store from "./redux/store";
@@ -14,6 +14,8 @@ import { auth } from "./firebase/firebase.utils";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 import "./index.scss";
+import CollectionPage from "./pages/CollectionPage/CollectionPage";
+import CollectionsOverview from "./components/CollectionsOverview/CollectionsOverview";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -22,7 +24,14 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<HomePage />} />
-            <Route path="shop" element={<Shop />} />
+            <Route path="shop" element={<Shop />}>
+              <Route index element={<CollectionsOverview />} />
+              <Route path="hats" element={<CollectionPage />} />
+              <Route path="jackets" element={<CollectionPage />} />
+              <Route path="sneakers" element={<CollectionPage />} />
+              <Route path="men" element={<CollectionPage />} />
+              <Route path="women" element={<CollectionPage />} />
+            </Route>
             <Route path="signin" element={<SignInForm />} />
             <Route path="signup" element={<SignUpForm />} />
             <Route path="signout" element={() => {

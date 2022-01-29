@@ -1,6 +1,12 @@
 .collection-container {
   cursor: pointer;
 
+  .image {
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+  }
+  
   &:hover {
     .image {
       opacity: 0.8;
@@ -8,10 +14,9 @@
   }
 
   .add-to-cart {
-    width: 55%;
     opacity: 0.7;
     position: absolute;
-    left: 90px;
+    left: 25%;
     bottom: 50px;
     background-color: rgb(214, 214, 214);
     font-size: 1.5rem;

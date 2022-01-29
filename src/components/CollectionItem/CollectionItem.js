@@ -10,13 +10,13 @@ const CollectionItem = (props) => {
   const { item } = props;
   const dispatch = useDispatch();
   return (
-    <Col className="collection-item gutter-row" span={6}>
+    <Col className="collection-item gutter-row">
       <Row>
-        <Col span={20} offset={4} className="collection-container">
+        <Col className="collection-container">
           <div className="image">
             <img src={item.imageUrl}></img>
           </div>
-          <Col className="collection-footer" span={20} offset={2}>
+          <Col className="collection-footer">
             <span className="name"><Text>{item.name}</Text></span>
             <span className="price"><Text>${item.price}</Text></span>
           </Col>

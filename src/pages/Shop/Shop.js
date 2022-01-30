@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import "./Shop.scss";
+import ShopPageContainer from './Shop.styles';
 
 const Shop = () => {
   return (
-    <div className="shop-page">
-    <Outlet />
-    </div>
+    <ShopPageContainer>
+      <Outlet />
+    </ShopPageContainer>
   );
 }
 

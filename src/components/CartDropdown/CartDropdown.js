@@ -1,6 +1,6 @@
 import { Menu, Dropdown, Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 import CartIcon from "../CartIcon/CartIcon";
 import CartItem from "../CartItem/CartItem";
@@ -19,7 +19,7 @@ const Cart = () => {
     ? ( <Dropdown overlay={
         <Menu className="cart-dropdown">
           <Menu.Item key="checkout-notice-disabled" className="checkout-section">
-          <div className="no-item-text">There are no items in the cart</div>
+            <div className="no-item-text">There are no items in the cart</div>
             <Button disabled className="checkout-btn">Go to Checkout</Button>
           </Menu.Item>
         </Menu>
@@ -31,10 +31,14 @@ const Cart = () => {
       </Dropdown>
       )
     : (
-      <Dropdown trigger={['click']} overlay={
+      <Dropdown trigger={["click"]} overlay={
         <Menu className="cart-dropdown" >
           {
-            cartItems.map(cartItem => <CartItem key={uuidv4()} item={cartItem} />)
+            cartItems.map(cartItem => {
+              const uuid = uuidv4();
+              console.log("UUID", uuid);
+              return <CartItem key={uuid} id={uuid} item={cartItem} />
+            })
           }
           <Menu.Item key="checkout-working" className="checkout-section">
             <Link to="/checkout" onClick={() => dispatch(toggleCartHidden())}>

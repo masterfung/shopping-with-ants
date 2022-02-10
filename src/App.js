@@ -5,14 +5,18 @@ import { HeartTwoTone } from "@ant-design/icons";
 
 import NavBar from "./components/NavBar/NavBar";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "./redux/user/userSlice";
+import { addCollectionAndDocuments } from "./firebase/firebase.utils";
+import { selectShopCollectionsForPreview } from "./redux/shop/shop.selectors";
+
 import "./App.scss";
 
 const { Footer, Content } = Layout;
 
 const App = () => {
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const state = useSelector(state => state);
+  const collections = selectShopCollectionsForPreview(state);
   const dispatch = useDispatch();
   let unsubscribeFromAuth = null;
 

@@ -1,5 +1,5 @@
 import { Col, Row, Typography, Button } from 'antd';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addCartItem } from "../../redux/cart/cartSlice";
 
 import "./CollectionItem.scss";

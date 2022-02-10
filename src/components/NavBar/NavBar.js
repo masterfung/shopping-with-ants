@@ -28,14 +28,14 @@ const NavBar = () => {
         </Menu.Item>
         <Menu.Item key="menu-contact">CONTACT</Menu.Item>
         <Menu.Item key="menu-sign-in-sign-up">
-        { 
-          ( currentUser?.email )
-          ? <Link to="/" onClick={() => {
-            auth.signOut();
-            dispatch(setCurrentUser(null))
-          }}>SIGN OUT</Link>
-          : <Link to="/signin">SIGN IN</Link>
-         }
+          { 
+            currentUser?.email
+            ? (<Link to="/" onClick={() => {
+              auth.signOut();
+              dispatch(setCurrentUser(null))
+            }}>SIGN OUT</Link>)
+            : (<Link to="/signin">SIGN IN</Link>)
+          }
         </Menu.Item>
         <Menu.Item key="menu-cart-nav">
           <CartDropdown />

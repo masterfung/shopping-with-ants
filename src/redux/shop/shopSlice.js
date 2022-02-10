@@ -1,16 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import SHOP_DATA from "./shop.data";
 
 const initialState = {
-  collections: SHOP_DATA
+  collections: null,
+  loading: true
 };
 
 export const shopSlice = createSlice({
   name: "shop",
   initialState,
-  reducers: {},
+  reducers: {
+    updateCollections: (state, action) => {
+      state.collections = action.payload
+    }
+  },
 });
 
-// export const { } = shopSlice.actions;
+export const { updateCollections } = shopSlice.actions;
 
 export default shopSlice.reducer;

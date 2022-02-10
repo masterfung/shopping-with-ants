@@ -155,7 +155,7 @@ const SignUpForm = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your nickname!",
+                message: "Please input your name!",
                 whitespace: true,
               },
             ]}
@@ -169,7 +169,7 @@ const SignUpForm = () => {
             rules={[
               {
                 required: true,
-                message: "Please select gender!",
+                message: "Please select a gender!",
               },
             ]}
           >

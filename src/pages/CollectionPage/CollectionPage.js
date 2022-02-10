@@ -10,10 +10,8 @@ const { Title } = Typography;
 
 const CollectionPage = () => {
   const location = useLocation();
-  console.log("!!!!!", location.pathname.split("/")[2]);
   const state = useSelector(state=> state);
   const collection = selectCollection(location.pathname.split("/")[2])(state);
-  console.log(collection);
 
   return (
     <div className="collection-page">

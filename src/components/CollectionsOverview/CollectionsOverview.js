@@ -11,7 +11,7 @@ const CollectionsOverview = () => {
   return (
     <div className="collections-overview">
       { collections.map(({id, items, title, routeName}) => {
-        return (<CollectionPreview key={`${title}-${id}`} items={items} title={title} />);
+        return (<CollectionPreview key={`${title}-${id}`} items={items} title={title} routeName={routeName} />);
       })}
     </div>
   )

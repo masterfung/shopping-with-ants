@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, addDoc, collection, query, where, getDocs, writeBatch, doc } from "firebase/firestore";
 
 const config = {
   apiKey: "AIzaSyB04FZbQkhzHR3vYE-MkWNWBJk5PayThtY",
@@ -17,6 +17,7 @@ initializeApp(config);
  
 export const auth = getAuth();
 export const db = getFirestore();
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -27,11 +28,9 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   let found = false;
   results.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-    const data = doc.data();
-    docRef = data;
+    docRef = doc.data();
     docRef.id = userAuth.uid;
-    if (data.email === userAuth.email) {
+    if (docRef.email === userAuth.email) {
       found = true;
     }
   });
@@ -55,6 +54,33 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   return docRef;
 };
+
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
+    const {items, title} = doc.data();
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    }
+  });
+
+  return transformedCollection.reduce((acc, col) => {
+    acc[col.title.toLowerCase()] = col;
+    return acc;
+  }, {})
+}
+
+// addCollectionAndDocuments("collections", collections.map(({title, items}) => ({title, items})));
+// The above is the code to run once at the app level. Keys could be checked so we don't need to worry but for now
+// we can normalize to just running once.
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = await collection(db, collectionKey);
+  objectsToAdd.forEach(obj => {
+    addDoc(collectionRef, obj, {merge: true});
+  });
+}
  
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ params: "select_account" });
